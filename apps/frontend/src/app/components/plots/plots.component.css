@@ -1,0 +1,11 @@
+:host {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+  grid-gap: 16px;
+  margin: 16px;
+}
+
+:host > * {
+  background-color: grey;
+  min-height: 200px;
+}

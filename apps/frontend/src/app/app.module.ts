@@ -16,6 +16,7 @@ import { MatModule } from './mat/mat.module';
 import { PlotComponent } from './components/plot/plot.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from '@nodeplotlib/pages';
+import { DataPersistence } from '@nrwl/nx';
 
 @NgModule({
   declarations: [AppComponent, PlotsComponent, PageNotFoundComponent, HelpComponent, ToolbarComponent, PlotComponent],
@@ -32,7 +33,7 @@ import { PagesModule } from '@nodeplotlib/pages';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     MatModule
   ],
-  providers: [],
+  providers: [DataPersistence],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
