@@ -1,1 +1,15 @@
 @import '~@angular/material/theming';
+
+:host {
+  display: block;
+  max-width: 1024px;
+  margin: 48px auto;
+  padding: 16px;
+  background-color: white;
+  border-radius: 4px;
+  @include mat-elevation(2);
+}
+
+h2 {
+  margin: 0;
+}
