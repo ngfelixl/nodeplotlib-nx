@@ -1,0 +1,134 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "nodeplotlib-nx": {
+      "root": "apps/nodeplotlib-nx/",
+      "sourceRoot": "apps/nodeplotlib-nx/src",
+      "projectType": "application",
+      "prefix": "nodeplotlib",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/nodeplotlib-nx",
+            "index": "apps/nodeplotlib-nx/src/index.html",
+            "main": "apps/nodeplotlib-nx/src/main.ts",
+            "polyfills": "apps/nodeplotlib-nx/src/polyfills.ts",
+            "tsConfig": "apps/nodeplotlib-nx/tsconfig.app.json",
+            "assets": [
+              "apps/nodeplotlib-nx/src/favicon.ico",
+              "apps/nodeplotlib-nx/src/assets"
+            ],
+            "styles": ["apps/nodeplotlib-nx/src/styles.css"],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/nodeplotlib-nx/src/environments/environment.ts",
+                  "with": "apps/nodeplotlib-nx/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "nodeplotlib-nx:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "nodeplotlib-nx:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "nodeplotlib-nx:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/nodeplotlib-nx/tsconfig.app.json",
+              "apps/nodeplotlib-nx/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/nodeplotlib-nx/jest.config.js",
+            "tsConfig": "apps/nodeplotlib-nx/tsconfig.spec.json",
+            "setupFile": "apps/nodeplotlib-nx/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "nodeplotlib-nx-e2e": {
+      "root": "apps/nodeplotlib-nx-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/nodeplotlib-nx-e2e/cypress.json",
+            "tsConfig": "apps/nodeplotlib-nx-e2e/tsconfig.e2e.json",
+            "devServerTarget": "nodeplotlib-nx:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "nodeplotlib-nx:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/nodeplotlib-nx-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics"
+  },
+  "schematics": {
+    "@nrwl/schematics:application": {
+      "framework": "angular"
+    }
+  },
+  "defaultProject": "nodeplotlib-nx"
+}
