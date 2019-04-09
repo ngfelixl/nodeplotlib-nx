@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+:host {
+  display: block;
+  background-color: white;
+  border-radius: 2px;
+  overflow: hidden;
+  @include mat-elevation(2);
+}
