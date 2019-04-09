@@ -7,7 +7,7 @@
       "root": "apps/frontend/",
       "sourceRoot": "apps/frontend/src",
       "projectType": "application",
-      "prefix": "nodeplotlib",
+      "prefix": "app",
       "schematics": {},
       "architect": {
         "build": {
@@ -196,6 +196,33 @@
           "options": {
             "jestConfig": "libs/interfaces/jest.config.js",
             "tsConfig": "libs/interfaces/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "pages": {
+      "root": "libs/pages",
+      "sourceRoot": "libs/pages/src",
+      "projectType": "library",
+      "prefix": "pages",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/pages/tsconfig.lib.json",
+              "libs/pages/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/pages/jest.config.js",
+            "tsConfig": "libs/pages/tsconfig.spec.json",
+            "setupFile": "libs/pages/src/test-setup.ts"
           }
         }
       },

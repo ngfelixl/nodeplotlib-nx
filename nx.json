@@ -19,6 +19,9 @@
     },
     "interfaces": {
       "tags": []
+    },
+    "pages": {
+      "tags": ["pages"]
     }
   }
 }
