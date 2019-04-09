@@ -8,10 +8,10 @@
     "nx.json": "*"
   },
   "projects": {
-    "nodeplotlib-nx": {
+    "frontend": {
       "tags": []
     },
-    "nodeplotlib-nx-e2e": {
+    "frontend-e2e": {
       "tags": []
     }
   }
