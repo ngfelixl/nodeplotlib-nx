@@ -11,10 +11,10 @@ export const PAGES_FEATURE_KEY = 'pages';
  */
 
 /* tslint:disable:no-empty-interface */
-export interface Entity {}
+// export interface Entity {}
 
 export interface PagesState {
-  list: Entity[]; // list of Pages; analogous to a sql normalized table
+  list: string[]; // list of Pages; analogous to a sql normalized table
   selectedId?: string | number; // which Pages record has been selected
   loaded: boolean; // has the Pages list been loaded
   error?: any; // last none error (if any)
@@ -25,8 +25,8 @@ export interface PagesPartialState {
 }
 
 export const initialState: PagesState = {
-  list: [],
-  loaded: false
+  list: ['Demo'],
+  loaded: true
 };
 
 export function pagesReducer(

@@ -17,7 +17,7 @@ export class PagesEffects {
     {
       run: (action: LoadPages, state: PagesPartialState) => {
         // Your custom REST 'load' logic goes here. For now just return an empty list...
-        return new PagesLoaded([]);
+        return new PagesLoaded(['Demo']);
       },
 
       onError: (action: LoadPages, error) => {

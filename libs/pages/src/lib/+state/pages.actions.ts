@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Entity } from './pages.reducer';
 
 export enum PagesActionTypes {
   LoadPages = '[Pages] Load Pages',
@@ -18,7 +17,7 @@ export class PagesLoadError implements Action {
 
 export class PagesLoaded implements Action {
   readonly type = PagesActionTypes.PagesLoaded;
-  constructor(public payload: Entity[]) {}
+  constructor(public payload: string[]) {}
 }
 
 export type PagesAction = LoadPages | PagesLoaded | PagesLoadError;

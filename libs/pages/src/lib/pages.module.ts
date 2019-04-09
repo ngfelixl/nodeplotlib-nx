@@ -10,10 +10,13 @@ import {
 } from './+state/pages.reducer';
 import { PagesEffects } from './+state/pages.effects';
 import { PagesFacade } from './+state/pages.facade';
+import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
     StoreModule.forFeature(PAGES_FEATURE_KEY, pagesReducer, {
       initialState: pagesInitialState
     }),
