@@ -22,6 +22,15 @@
     },
     "pages": {
       "tags": ["pages"]
+    },
+    "nodeplotlib": {
+      "tags": []
+    },
+    "shared-data": {
+      "tags": []
+    },
+    "reactive-entity-store": {
+      "tags": []
     }
   }
 }

@@ -227,6 +227,106 @@
         }
       },
       "schematics": {}
+    },
+    "nodeplotlib": {
+      "root": "libs/nodeplotlib",
+      "sourceRoot": "libs/nodeplotlib/src",
+      "projectType": "library",
+      "prefix": "nodeplotlib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/nodeplotlib/tsconfig.lib.json",
+            "project": "libs/nodeplotlib/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/nodeplotlib/tsconfig.lib.json",
+              "libs/nodeplotlib/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/nodeplotlib/jest.config.js",
+            "tsConfig": "libs/nodeplotlib/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "none"
+        }
+      }
+    },
+    "shared-data": {
+      "root": "libs/shared-data",
+      "sourceRoot": "libs/shared-data/src",
+      "projectType": "library",
+      "prefix": "nodeplotlib",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared-data/tsconfig.lib.json",
+              "libs/shared-data/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/shared-data/jest.config.js",
+            "tsConfig": "libs/shared-data/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "none"
+        }
+      }
+    },
+    "reactive-entity-store": {
+      "root": "libs/reactive-entity-store",
+      "sourceRoot": "libs/reactive-entity-store/src",
+      "projectType": "library",
+      "prefix": "nodeplotlib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/reactive-entity-store/tsconfig.lib.json",
+            "project": "libs/reactive-entity-store/ng-package.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/reactive-entity-store/tsconfig.lib.json",
+              "libs/reactive-entity-store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/reactive-entity-store/jest.config.js",
+            "tsConfig": "libs/reactive-entity-store/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
