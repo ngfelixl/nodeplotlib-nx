@@ -1,25 +1,62 @@
 # ReactiveEntityStore
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+Currently I am part of [nodeplotlib](https://github.com/ngfelixl/ndoeplotlib-nx) but I am
+completely independent. You can use me as a very simple to share-around and
+easy to use entity store. I am providing utilities for all common crud operations and
+I am completely reactive.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project reactive-entity-store` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project reactive-entity-store`.
+```shell
+npm install reactive-entity-store
+```
 
-> Note: Don't forget to add `--project reactive-entity-store` or else it will be added to the default project in your `angular.json` file.
+## Usage
 
-## Build
+At first you have to create an empty entity store. Let's use the name *books*
+in this demonstration. At first we create a file called **books-store.ts**
+which will contain the following
 
-Run `ng build reactive-entity-store` to build the project. The build artifacts will be stored in the `dist/` directory.
+```ts
+import { Store } from 'reactive-entity-store';
 
-## Publishing
+export interface Book {
+  id?: string;
+  title: string;
+  author: string;
+}
 
-After building your library with `ng build reactive-entity-store`, go to the dist folder `cd dist/reactive-entity-store` and run `npm publish`.
+export const books = new Store<Book>();
+```
 
-## Running unit tests
+It does not matter how you name your files at all, this is just for demonstration
+purposes. Lets create a reader of the store, lets name it **service.ts**.
 
-Run `ng test reactive-entity-store` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+import { books } from './pathto/books-store';
 
-## Further help
+books.getAll().subscribe(books => console.log(books));
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+In another file called **controller.ts** we are going to play
+around with some of the add and remove logic. The comments are
+printed due to the `console.log` in the previous file.
+
+```ts
+import { books } from './pathto/books-store';
+
+books.add$.next({ id: 'tcc', title: 'Clean Coder', author: 'Bob' });
+// [{id: 'tcc', title: 'Clean Coder', author: 'Bob'}]
+books.add$.next({ id: 'ng', title: 'Angular', author: 'Rob' });
+// [{id: 'ng', title: 'Angular', author: 'Rob'}, {id: 'tcc', title: 'Clean Coder', author: 'Bob'}]
+books.remove$.next('tcc');
+// [{id: 'ng', title: 'Angular', author: 'Rob'}]
+books.update$.next({id: 'ng', title: 'React'});
+// [{id: 'ng', title: 'React', author: 'Rob'}]
+books.add$.next({title: 'Vue', author: 'Evan'});
+// [{id: 'someUniqueRandomString', title: 'Vue', author: 'Evan'}, {id: 'ng', title: 'React', author: 'Rob}]
+books.removeAll$.next();
+// []
+```
+
+The `someUniqueRandomString` will be a string of 20 characters [0-9a-zA-Z].

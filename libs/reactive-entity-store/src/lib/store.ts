@@ -18,10 +18,19 @@ interface EntityStore<T = any> {
 }
 
 /**
- * Reactive crud store providing
+ * Reactive crud store
  * 
+ * This store targets the creation of a very simple store
+ * to keep your entities in. It provides modification functions
+ * for adding, adding all, removing one by id, remove all,
+ * update one.
+ * 
+ * The read functions return observables to read the stored
+ * entities in an object or array way. Also you can get a
+ * single entity by an id.
+ *
  * ## Example
- * 
+ *
  * ```ts
  * const numberStore = new Store<number>();
  * numberStore.getAll().subscribe(console.log);
@@ -84,7 +93,9 @@ export class Store<T> {
    * Get all entities in an array
    */
   getAll(): Observable<T[]> {
-    return this.entities$.pipe(map(entities => Object.values(entities)));
+    return this.entities$.pipe(map(entities => {
+      return Object.entries(entities).map(([id, value]: [string, T]) => ({id, ...value}))
+    }));
   }
 
   /**
@@ -96,12 +107,12 @@ export class Store<T> {
 }
 
 function addOne<T>(store: EntityStore<T>, payload: T): EntityStore<T> {
-  const id = createUniqueId(store.entities);
+  const id = payload['id'] || createUniqueId(store.entities);
   return {entities: {...store.entities, [id]: payload}, ids: [...store.ids, id]};
 }
 function addAll<T>(payload: T[]): EntityStore<T> {
   return payload.reduce((accStore: EntityStore<T>, entity: T) => {
-    const id = createUniqueId(accStore.entities);
+    const id = entity['id'] || createUniqueId(accStore.entities);
     return {entities: {...accStore, [id]: entity}, ids: [...accStore.ids, id]};
   }, {entities: {}, ids: []});
 }
