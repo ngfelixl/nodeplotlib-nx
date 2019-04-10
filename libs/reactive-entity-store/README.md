@@ -1,9 +1,11 @@
 # Reactive Entity Store
 
+![NPM](https://img.shields.io/npm/l/reactive-entity-store.svg)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/reactive-entity-store.svg)
+
 Currently this is part of [nodeplotlib](https://github.com/ngfelixl/ndoeplotlib-nx),
 but it is completely independent. It's a lightweight reactive entity store providing utilities
 for all commonly used crud operations, without setting up anything except the interface.
-The minified bundle is ~3kb in size.
 
 ## Installation
 
