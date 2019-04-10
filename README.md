@@ -1,4 +1,10 @@
-# NodePlotLib
+# NodePlotLib-Nx
+
+This (not-yet-working) repository is a complete refactor of [nodeplotlib](https://github.com/ngfelixl/nodeplotlib).
+It makes use of nrwl/nx and is almost complete build by schematics. The backend is build with [nestjs](https://nestjs.com/),
+the frontend is an [angular](https://angular.io/) application.
+
+# Nodeplotlib
 
 [![Build Status](https://travis-ci.org/ngfelixl/nodeplotlib.svg?branch=master)](https://travis-ci.org/ngfelixl/nodeplotlib)
 [![Coverage Status](https://coveralls.io/repos/github/ngfelixl/nodeplotlib/badge.svg?branch=master)](https://coveralls.io/github/ngfelixl/nodeplotlib?branch=master)
