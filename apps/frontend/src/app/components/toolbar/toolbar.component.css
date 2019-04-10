@@ -6,10 +6,15 @@
   margin-right: 8px;
 }
 
-.help {
-  margin-left: 8px;
-}
-
 .social > * {
   width: 16px;
+}
+
+.socket {
+  margin-left: 16px;
+  color: red;
+}
+
+.socket.connected {
+  color: green;
 }

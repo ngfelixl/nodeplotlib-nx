@@ -3,6 +3,7 @@
   <span>Nodeplotlib</span>
   <span class="spacer"></span>
   <pages-dropdown></pages-dropdown>
+  <button mat-icon-button class="socket" [class.connected]="connected$ | async"><mat-icon>fiber_manual_record</mat-icon></button>
   <button class="help" mat-icon-button routerLink="docs"><mat-icon>layers</mat-icon></button>
   <a href="https://twitter.com/nodeplotlib"><button mat-icon-button><img src="assets/social/twitter.png" width="22px"></button></a>
   <a href="https://github.com/ngfelixl/nodeplotlib"><button mat-icon-button><img src="assets/social/github.png" width="22px"></button></a>

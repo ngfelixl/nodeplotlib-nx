@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DocsComponent } from './components/docs/docs.component';
 
 const routes: Routes = [
+  { path: 'plots', component: PlotsComponent },
   { path: 'page/:id', component: PlotsComponent },
   { path: 'docs', component: DocsComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
