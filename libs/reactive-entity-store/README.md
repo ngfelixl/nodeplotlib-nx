@@ -1,8 +1,9 @@
-# ReactiveEntityStore
+# Reactive Entity Store
 
-Currently this is part of [nodeplotlib](https://github.com/ngfelixl/ndoeplotlib-nx)
-. It is completely independent from it. It's a reactive entity store providing utilities
-for all commonly used crud operations.
+Currently this is part of [nodeplotlib](https://github.com/ngfelixl/ndoeplotlib-nx),
+but it is completely independent. It's a lightweight reactive entity store providing utilities
+for all commonly used crud operations, without setting up anything except the interface.
+The minified bundle is ~3kb in size.
 
 ## Installation
 
@@ -35,6 +36,12 @@ purposes. Lets create a reader of the store, lets name it **service.ts**.
 import { books } from './pathto/books-store';
 
 books.getAll().subscribe(books => console.log(books));
+
+// there are several other "getters"
+books.getOne('id1');            // Observable<Book>
+books.getOneDynamic(of('id1')); // Observable<Book>
+books.getEntities();            // Observable<{[id: string]: Book}>
+books.getIds();                 // Observable<string[]>
 ```
 
 In another file called **controller.ts** we are going to play
@@ -76,5 +83,5 @@ Software developer and NgRX contributor. If you have questions, don't hesitate t
 
 ![avatar](https://avatars2.githubusercontent.com/u/24190530?s=200&v=4)
 
-If you like this library, think about giving it a star or follow me on twitter or github or check out my personal
+If you like this library, think about giving it a [star](https://github.com/ngfelixl/nodeplotlib-nx) or follow me on twitter or github or check out my personal
 the [website](https://felixlemke.com).

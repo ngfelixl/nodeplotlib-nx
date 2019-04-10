@@ -1,4 +1,6 @@
-export function createUniqueId(object: {[id: string]: any}, length = 20): string {
+import { Entities } from './interfaces';
+
+export function createUniqueId<T>(object: Entities<T>, length = 20): string {
   let id: string;
 
   do {

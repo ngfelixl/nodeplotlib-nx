@@ -1,21 +1,7 @@
 import { Subject, Observable } from 'rxjs';
-import { scan, map, pluck, share } from 'rxjs/operators';
-import { createUniqueId } from './create-unique-id';
-
-interface Action<T = any> {
-  type: string;
-  payload?: T;
-}
-
-export interface Update<T = any> {
-  id: string;
-  payload: Partial<T>;
-}
-
-interface EntityStore<T = any> {
-  entities: {[id: string]: T};
-  ids: string[];
-}
+import { scan, map, pluck, share, switchMap } from 'rxjs/operators';
+import { Action, Update, EntityStore, Entities } from './interfaces';
+import { addOne, addAll, addMany, updateOne, removeOne, removeAll } from './reducers';
 
 /**
  * Reactive crud store
@@ -43,7 +29,7 @@ interface EntityStore<T = any> {
 export class Store<T> {
   private store$: Observable<EntityStore<T>>;
   private actions$ = new Subject<Action>();
-  private entities$: Observable<{[id: string]: T}>;
+  private entities$: Observable<Entities<T>>;
 
   constructor() {
     this.store$ = this.createStore();
@@ -55,10 +41,12 @@ export class Store<T> {
       scan((store: EntityStore<T>, action: Action) => {
         switch(action.type) {
           case 'add': return addOne<T>(store, action.payload);
+          case 'addMany': return addMany<T>(store, action.payload);
           case 'addAll': return addAll<T>(action.payload);
           case 'update': return updateOne<T>(store, action.payload);
           case 'remove': return removeOne<T>(store, action.payload);
           case 'removeAll': return removeAll<T>();
+          default: return store;
         }
       }, {entities: {}, ids: []}),
       share()
@@ -66,6 +54,7 @@ export class Store<T> {
   }
 
   add(entity: T): void { this.actions$.next({type: 'add', payload: entity}); }
+  addMany(entities: T[]): void { this.actions$.next({type: 'addMany', payload: entities}); }
   addAll(entities: T[]): void { this.actions$.next({type: 'addAll', payload: entities}); }
   update(changes: Update): void { this.actions$.next({type: 'update', payload: changes}); }
   remove(id: string): void { this.actions$.next({type: 'remove', payload: id}); }
@@ -73,10 +62,24 @@ export class Store<T> {
 
   /**
    * Get one entity filtered by id
-   * @param id 
+   * @param id
    */
-  getOne(id: string): Observable<T> {
-    return this.entities$.pipe(pluck(id));
+  getOne(id: string): Observable<T | undefined> {
+    return this.entities$.pipe(
+      pluck(id),
+      map((entity: T | undefined) => (entity ? {id, ...entity} : undefined))
+    );
+  }
+
+  /**
+   * Get one item by a maybe changing variable. This for example can be useful
+   * when getting data by router paramters
+   * @param id$
+   */
+  getOneDynamic(id$: Observable<string>): Observable<T | undefined> {
+    return id$.pipe(
+      switchMap(id => this.getOne(id))
+    )
   }
 
   /**
@@ -84,46 +87,24 @@ export class Store<T> {
    */
   getAll(): Observable<T[]> {
     return this.entities$.pipe(map(entities => {
-      return Object.entries(entities).map(([id, value]: [string, T]) => ({id, ...value}))
+      return Object.entries(entities).map(
+        ([id, entity]: [string, T]) => ({id, ...entity})
+      );
     }));
   }
 
   /**
    * Get all entities as an object with keys
    */
-  getEntities(): Observable<{[id: string]: T}> {
+  getEntities(): Observable<Entities<T>> {
     return this.entities$;
   }
+
+  /**
+   * Return all ids
+   */
+  getIds(): Observable<string[]> {
+    return this.store$.pipe(pluck('ids'));
+  }
 }
 
-function addOne<T>(store: EntityStore<T>, payload: T): EntityStore<T> {
-  if (!payload) {
-    return store;
-  }
-
-  const id = payload['id'] || createUniqueId(store.entities);
-  return {entities: {...store.entities, [id]: payload}, ids: [...store.ids, id]};
-}
-function addAll<T>(payload: T[]): EntityStore<T> {
-  return payload.reduce((store: EntityStore<T>, entity: T) => {
-    const id = entity['id'] || createUniqueId(store.entities);
-    store.entities[id] = entity;
-    store.ids.push(id);
-    return store;
-  }, {entities: {}, ids: []});
-}
-function removeOne<T>(store: EntityStore<T>, id: string): EntityStore<T> {
-  if (store.entities[id]) {
-    delete store.entities[id];
-    store.ids.splice(store.ids.indexOf(id), 1);
-  }
-  return store;
-}
-function removeAll<T>(): EntityStore<T> {
-  return {entities: {}, ids: []};
-}
-function updateOne<T>(store: EntityStore<T>, update: Update) {
-  const entity = store.entities[update.id];
-  store.entities[update.id] = {...entity, ...update.payload};
-  return store;
-}

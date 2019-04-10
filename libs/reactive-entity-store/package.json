@@ -8,7 +8,8 @@
     "store",
     "reactive",
     "entity-store",
-    "rx"
+    "rx",
+    "3kb minified"
   ],
   "license": "MIT",
   "repository": {
@@ -18,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/ngfelixl/nodeplotlib-nx/issues"
   },
-  "homepage": "https://github.com/ngfelixl/nodeplotlib#readme",
+  "homepage": "https://github.com/ngfelixl/nodeplotlib-nx/tree/master/libs/reactive-entity-store#readme",
   "peerDependencies": {
     "rxjs": "6.4.0"
   }
