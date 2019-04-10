@@ -1,7 +1,8 @@
 {
   "name": "nodeplotlib-nx",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
+  "Author": "Felix Lemke <flemke.dev@gmail.com> (https://felixlemke.com)",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
