@@ -1,9 +1,9 @@
-import { Subject, combineLatest, Observable } from 'rxjs';
-import { scan, tap, map, publish, pluck, mapTo } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { scan, map, pluck, share } from 'rxjs/operators';
 import { createUniqueId } from './create-unique-id';
 
-interface Task<T = any>{
-  id: number;
+interface Action<T = any> {
+  type: string;
   payload?: T;
 }
 
@@ -34,52 +34,42 @@ interface EntityStore<T = any> {
  * ```ts
  * const numberStore = new Store<number>();
  * numberStore.getAll().subscribe(console.log);
- * numberStore.add$.next(8);
- * numberStore.add$.next(3);
- * numberStore.removeAll$.next();
+ * numberStore.add(8);
+ * numberStore.add(3);
+ * numberStore.removeAll();
  * // logs ---> [8] ---> [8, 3] ---> []
  * ```
  */
 export class Store<T> {
-  private id = 0;
-  add$ = new Subject<T>();
-  addAll$ = new Subject<T[]>();
-  update$ = new Subject<Update>();
-  remove$ = new Subject<string>();
-  removeAll$ = new Subject<string>();
+  private store$: Observable<EntityStore<T>>;
+  private actions$ = new Subject<Action>();
+  private entities$: Observable<{[id: string]: T}>;
 
-  private addTask$: Observable<Task<T>> = this.add$.pipe(map(payload => ({id: this.id, payload})));
-  private addAllTask$: Observable<Task<T[]>> = this.addAll$.pipe(map(payload => ({id: this.id, payload})));
-  private updateTask$: Observable<Task<Update>> = this.update$.pipe(map(payload => ({id: this.id, payload})));
-  private removeTask$: Observable<Task<string>> = this.remove$.pipe(map(payload => ({id: this.id, payload})));
-  private removeAllTask$: Observable<Task> = this.removeAll$.pipe(mapTo({id: this.id}));
+  constructor() {
+    this.store$ = this.createStore();
+    this.entities$ = this.store$.pipe(pluck('entities'));
+  }
 
-  private store$ = combineLatest(
-    this.addTask$,
-    this.addAllTask$,
-    this.updateTask$,
-    this.removeTask$,
-    this.removeAllTask$
-  ).pipe(
-    scan((store: EntityStore, [
-      addTask,
-      addAllTask,
-      updateTask,
-      removeTask,
-      removeAllTask]: [Task<T>, Task<T[]>, Task<Update>, Task<string>, Task]) => {
-      switch (this.id) {
-        case removeTask.id: return removeOne<T>(store, removeTask.payload);
-        case removeAllTask.id: return removeAll<T>();
-        case updateTask.id: return updateOne<T>(store, updateTask.payload);
-        case addTask.id: return addTask.payload ? addOne<T>(store, addTask.payload) : store;
-        case addAllTask.id: return addAll<T>(addAllTask.payload);
-      }
-    }, {entities: {}, ids: []}),
-    tap(() => this.id++),
-    publish()
-  );
+  private createStore(): Observable<EntityStore<T>> {
+    return this.actions$.pipe(
+      scan((store: EntityStore<T>, action: Action) => {
+        switch(action.type) {
+          case 'add': return addOne<T>(store, action.payload);
+          case 'addAll': return addAll<T>(action.payload);
+          case 'update': return updateOne<T>(store, action.payload);
+          case 'remove': return removeOne<T>(store, action.payload);
+          case 'removeAll': return removeAll<T>();
+        }
+      }, {entities: {}, ids: []}),
+      share()
+    );
+  }
 
-  private entities$ = this.store$.pipe(pluck('entities'), publish());
+  add(entity: T): void { this.actions$.next({type: 'add', payload: entity}); }
+  addAll(entities: T[]): void { this.actions$.next({type: 'addAll', payload: entities}); }
+  update(changes: Update): void { this.actions$.next({type: 'update', payload: changes}); }
+  remove(id: string): void { this.actions$.next({type: 'remove', payload: id}); }
+  removeAll(): void { this.actions$.next({type: 'removeAll'}); }
 
   /**
    * Get one entity filtered by id
@@ -90,7 +80,7 @@ export class Store<T> {
   }
 
   /**
-   * Get all entities in an array
+   * Get all entities in an array including the id property
    */
   getAll(): Observable<T[]> {
     return this.entities$.pipe(map(entities => {
@@ -99,7 +89,7 @@ export class Store<T> {
   }
 
   /**
-   * Get all entities as an object
+   * Get all entities as an object with keys
    */
   getEntities(): Observable<{[id: string]: T}> {
     return this.entities$;
@@ -107,13 +97,19 @@ export class Store<T> {
 }
 
 function addOne<T>(store: EntityStore<T>, payload: T): EntityStore<T> {
+  if (!payload) {
+    return store;
+  }
+
   const id = payload['id'] || createUniqueId(store.entities);
   return {entities: {...store.entities, [id]: payload}, ids: [...store.ids, id]};
 }
 function addAll<T>(payload: T[]): EntityStore<T> {
-  return payload.reduce((accStore: EntityStore<T>, entity: T) => {
-    const id = entity['id'] || createUniqueId(accStore.entities);
-    return {entities: {...accStore, [id]: entity}, ids: [...accStore.ids, id]};
+  return payload.reduce((store: EntityStore<T>, entity: T) => {
+    const id = entity['id'] || createUniqueId(store.entities);
+    store.entities[id] = entity;
+    store.ids.push(id);
+    return store;
   }, {entities: {}, ids: []});
 }
 function removeOne<T>(store: EntityStore<T>, id: string): EntityStore<T> {

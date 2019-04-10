@@ -1,9 +1,8 @@
 # ReactiveEntityStore
 
-Currently I am part of [nodeplotlib](https://github.com/ngfelixl/ndoeplotlib-nx) but I am
-completely independent. You can use me as a very simple to share-around and
-easy to use entity store. I am providing utilities for all common crud operations and
-I am completely reactive.
+Currently this is part of [nodeplotlib](https://github.com/ngfelixl/ndoeplotlib-nx)
+. It is completely independent from it. It's a reactive entity store providing utilities
+for all commonly used crud operations.
 
 ## Installation
 
@@ -45,18 +44,37 @@ printed due to the `console.log` in the previous file.
 ```ts
 import { books } from './pathto/books-store';
 
-books.add$.next({ id: 'tcc', title: 'Clean Coder', author: 'Bob' });
+books.add({ id: 'tcc', title: 'Clean Coder', author: 'Bob' });
 // [{id: 'tcc', title: 'Clean Coder', author: 'Bob'}]
-books.add$.next({ id: 'ng', title: 'Angular', author: 'Rob' });
+books.add({ id: 'ng', title: 'Angular', author: 'Rob' });
 // [{id: 'ng', title: 'Angular', author: 'Rob'}, {id: 'tcc', title: 'Clean Coder', author: 'Bob'}]
-books.remove$.next('tcc');
+books.remove('tcc');
 // [{id: 'ng', title: 'Angular', author: 'Rob'}]
-books.update$.next({id: 'ng', title: 'React'});
+books.update({id: 'ng', title: 'React'});
 // [{id: 'ng', title: 'React', author: 'Rob'}]
-books.add$.next({title: 'Vue', author: 'Evan'});
+books.add({title: 'Vue', author: 'Evan'});
 // [{id: 'someUniqueRandomString', title: 'Vue', author: 'Evan'}, {id: 'ng', title: 'React', author: 'Rob}]
-books.removeAll$.next();
+books.removeAll();
 // []
+books.addAll([
+  { id: 'ng', title: 'Angular', author: 'Rob' },
+  { id: 'tcc', title: 'Clean Coder', author: 'Bob' }
+]);
+// [{id: 'ng', title: 'Angular', author: 'Rob'}, {id: 'tcc', title: 'Clean Coder', author: 'Bob'}]
 ```
 
-The `someUniqueRandomString` will be a string of 20 characters [0-9a-zA-Z].
+If you don't provide an `id` property it will autogenerate a string of 20 characters [0-9a-zA-Z] as the id.
+
+
+## Get in touch
+
+[![twitter](https://img.shields.io/badge/twitter-%40ngfelixl-blue.svg?logo=twitter)](https://twitter.com/intent/follow?screen_name=ngfelixl)
+[![github](https://img.shields.io/badge/github-%40ngfelixl-blue.svg?logo=github)](https://github.com/ngfelixl)
+
+Hi, I am Felix,
+Software developer and NgRX contributor. If you have questions, don't hesitate to reach out.
+
+![avatar](https://avatars2.githubusercontent.com/u/24190530?s=200&v=4)
+
+If you like this library, think about giving it a star or follow me on twitter or github or check out my personal
+the [website](https://felixlemke.com).

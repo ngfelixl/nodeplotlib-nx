@@ -11,5 +11,5 @@ export function stack(data: Observable<Trace[]> | Trace[], layout?: Layout) {
     stream$ = data;
   }
 
-  plotStack.add$.next({stream$, layout});
+  plotStack.add({stream$, layout});
 }
