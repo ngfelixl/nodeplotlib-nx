@@ -17,7 +17,7 @@ export async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'frontend'), {prefix: '/'});
 
   await app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/${globalPrefix}`);
+    console.log(`Listening at http://localhost:${port}`);
   });
 }
 

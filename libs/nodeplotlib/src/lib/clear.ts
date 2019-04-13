@@ -1,5 +1,5 @@
-import { plotStack } from '@nodeplotlib/shared-data';
+import { plots } from '@nodeplotlib/shared-data';
 
 export function clear() {
-  plotStack.removeAll();
+  plots.removeAll();
 }

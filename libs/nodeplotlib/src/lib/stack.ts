@@ -1,4 +1,4 @@
-import { plotStack } from '@nodeplotlib/shared-data';
+import { plots } from '@nodeplotlib/shared-data';
 import { Observable, of as observableOf } from 'rxjs';
 import { Trace, Layout } from '@nodeplotlib/interfaces';
 
@@ -11,5 +11,5 @@ export function stack(data: Observable<Trace[]> | Trace[], layout?: Layout) {
     stream$ = data;
   }
 
-  plotStack.add({stream$, layout});
+  plots.add({stream$, layout});
 }
