@@ -10,7 +10,6 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from '../environments/environment';
 import { MatModule } from './mat/mat.module';
 import { AppRoutingModule } from './app-routing.module';
-import { PagesModule } from '@nodeplotlib/pages';
 
 import { AppComponent } from './components/app/app.component';
 import { components } from './components/index';
@@ -21,7 +20,6 @@ import { components } from './components/index';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    PagesModule,
     StoreModule.forRoot(
       {},
       { metaReducers: !environment.production ? [storeFreeze] : [] }

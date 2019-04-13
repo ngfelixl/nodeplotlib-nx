@@ -10,11 +10,10 @@
   width: 16px;
 }
 
-.socket {
-  margin-left: 16px;
-  color: red;
-}
-
-.socket.connected {
-  color: green;
+.brand-container {
+  display: inherit;
+  cursor: pointer;
+  outline: none;
+  padding: 4px;
+  border-radius: 4px;
 }
