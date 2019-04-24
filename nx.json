@@ -9,22 +9,32 @@
   },
   "projects": {
     "frontend": {
-      "tags": []
+      "tags": [
+        "publish"
+      ]
     },
     "frontend-e2e": {
       "tags": []
     },
     "backend": {
-      "tags": ["backend"]
+      "tags": [
+        "server",
+        "development"
+      ]
     },
     "interfaces": {
       "tags": []
     },
     "nodeplotlib": {
-      "tags": []
+      "tags": [
+        "server",
+        "publish"
+      ]
     },
-    "shared-data": {
-      "tags": []
+    "server": {
+      "tags": [
+        "server"
+      ]
     }
   }
 }

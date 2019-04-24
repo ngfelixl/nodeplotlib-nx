@@ -81,7 +81,9 @@
               "apps/frontend/tsconfig.app.json",
               "apps/frontend/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -116,7 +118,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/frontend-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -132,9 +136,11 @@
           "builder": "@nrwl/builders:node-build",
           "options": {
             "outputPath": "dist/apps/backend",
-            "main": "apps/backend/src/main.ts",
+            "main": "apps/backend/src/index.ts",
             "tsConfig": "apps/backend/tsconfig.app.json",
-            "assets": ["apps/backend/src/assets"]
+            "assets": [
+              "apps/backend/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -163,7 +169,9 @@
               "apps/backend/tsconfig.app.json",
               "apps/backend/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -175,158 +183,115 @@
         }
       }
     },
-    "interfaces": {
-      "root": "libs/interfaces",
-      "sourceRoot": "libs/interfaces/src",
-      "projectType": "library",
-      "prefix": "nodeplotlib",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/interfaces/tsconfig.lib.json",
-              "libs/interfaces/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/builders:jest",
-          "options": {
-            "jestConfig": "libs/interfaces/jest.config.js",
-            "tsConfig": "libs/interfaces/tsconfig.spec.json"
-          }
-        }
-      },
-      "schematics": {}
-    },
-    "pages": {
-      "root": "libs/pages",
-      "sourceRoot": "libs/pages/src",
-      "projectType": "library",
-      "prefix": "pages",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/pages/tsconfig.lib.json",
-              "libs/pages/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/builders:jest",
-          "options": {
-            "jestConfig": "libs/pages/jest.config.js",
-            "tsConfig": "libs/pages/tsconfig.spec.json",
-            "setupFile": "libs/pages/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {}
-    },
     "nodeplotlib": {
-      "root": "libs/nodeplotlib",
-      "sourceRoot": "libs/nodeplotlib/src",
-      "projectType": "library",
+      "root": "apps/nodeplotlib",
+      "sourceRoot": "apps/nodeplotlib/src",
+      "projectType": "application",
       "prefix": "nodeplotlib",
+      "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@nrwl/builders:node-build",
           "options": {
-            "tsConfig": "libs/nodeplotlib/tsconfig.lib.json",
-            "project": "libs/nodeplotlib/ng-package.json"
+            "outputPath": "dist/apps/nodeplotlib",
+            "main": "apps/nodeplotlib/src/main.ts",
+            "tsConfig": "apps/nodeplotlib/tsconfig.app.json",
+            "assets": [
+              "apps/nodeplotlib/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/nodeplotlib/src/environments/environment.ts",
+                  "with": "apps/nodeplotlib/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/builders:node-execute",
+          "options": {
+            "buildTarget": "nodeplotlib:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/nodeplotlib/tsconfig.lib.json",
-              "libs/nodeplotlib/tsconfig.spec.json"
+              "apps/nodeplotlib/tsconfig.app.json",
+              "apps/nodeplotlib/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/builders:jest",
           "options": {
-            "jestConfig": "libs/nodeplotlib/jest.config.js",
-            "tsConfig": "libs/nodeplotlib/tsconfig.spec.json"
+            "jestConfig": "apps/nodeplotlib/jest.config.js",
+            "tsConfig": "apps/nodeplotlib/tsconfig.spec.json"
           }
-        }
-      },
-      "schematics": {
-        "@nrwl/schematics:component": {
-          "styleext": "none"
         }
       }
     },
-    "shared-data": {
-      "root": "libs/shared-data",
-      "sourceRoot": "libs/shared-data/src",
+    "server": {
+      "root": "libs/server",
+      "sourceRoot": "libs/server/src",
       "projectType": "library",
-      "prefix": "nodeplotlib",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/shared-data/tsconfig.lib.json",
-              "libs/shared-data/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/builders:jest",
-          "options": {
-            "jestConfig": "libs/shared-data/jest.config.js",
-            "tsConfig": "libs/shared-data/tsconfig.spec.json"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/schematics:component": {
-          "styleext": "none"
-        }
-      }
-    },
-    "reactive-entity-store": {
-      "root": "libs/reactive-entity-store",
-      "sourceRoot": "libs/reactive-entity-store/src",
-      "projectType": "library",
-      "prefix": "nodeplotlib",
+      "prefix": "server",
+      "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@nrwl/builders:node-build",
           "options": {
-            "tsConfig": "libs/reactive-entity-store/tsconfig.lib.json",
-            "project": "libs/reactive-entity-store/ng-package.json"
+            "outputPath": "dist/apps/server",
+            "main": "libs/server/src/index.ts",
+            "tsConfig": "libs/server/tsconfig.app.json",
+            "assets": [
+              "libs/server/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "libs/server/src/environments/environment.ts",
+                  "with": "libs/server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/reactive-entity-store/tsconfig.lib.json",
-              "libs/reactive-entity-store/tsconfig.spec.json"
+              "apps/server/tsconfig.app.json",
+              "apps/server/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/builders:jest",
           "options": {
-            "jestConfig": "libs/reactive-entity-store/jest.config.js",
-            "tsConfig": "libs/reactive-entity-store/tsconfig.spec.json"
+            "jestConfig": "apps/server/jest.config.js",
+            "tsConfig": "apps/server/tsconfig.spec.json"
           }
         }
-      },
-      "schematics": {}
+      }
     }
   },
   "cli": {

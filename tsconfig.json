@@ -15,13 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nodeplotlib/interfaces": ["libs/interfaces/src/index.ts"],
-      "@nodeplotlib/pages": ["libs/pages/src/index.ts"],
       "@nodeplotlib/nodeplotlib": ["libs/nodeplotlib/src/index.ts"],
-      "@nodeplotlib/shared-data": ["libs/shared-data/src/index.ts"],
-      "@nodeplotlib/reactive-entity-store": [
-        "libs/reactive-entity-store/src/index.ts"
-      ]
+      "@nodeplotlib/server": ["libs/server/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]
