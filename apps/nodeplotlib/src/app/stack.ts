@@ -1,6 +1,6 @@
 import { plots } from './shared-data';
 import { Observable, of as observableOf } from 'rxjs';
-import { Trace, Layout } from './interfaces';
+import { Trace, Layout } from '@nodeplotlib/interfaces';
 
 export function stack(data: Observable<Trace[]> | Trace[], layout?: Layout) {
   let stream$: Observable<Trace[]>;

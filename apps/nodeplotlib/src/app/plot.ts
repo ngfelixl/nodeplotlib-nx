@@ -1,5 +1,5 @@
 import { stack } from './stack';
-import { Layout, Trace } from './interfaces';
+import { Layout, Trace } from '@nodeplotlib/interfaces';
 import { Observable } from 'rxjs';
 import * as open from 'open';
 import {bootstrap} from '@nodeplotlib/server';

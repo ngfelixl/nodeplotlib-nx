@@ -17,6 +17,7 @@
     "paths": {
       "@nodeplotlib/nodeplotlib": ["libs/nodeplotlib/src/index.ts"],
       "@nodeplotlib/server": ["libs/server/src/index.ts"],
+      "@nodeplotlib/interfaces": ["libs/interfaces/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
