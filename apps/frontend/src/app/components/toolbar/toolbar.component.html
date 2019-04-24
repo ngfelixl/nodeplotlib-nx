@@ -1,9 +1,11 @@
 <mat-toolbar color="primary">
-  <img class="brand" src="assets/icon/favicon-32x32.png">
-  <span>Nodeplotlib</span>
+  <div class="brand-container" routerLink="plots" matRipple matRippleColor="rgba(255,255,255,0.1)">
+    <img class="brand" src="assets/icon/favicon-32x32.png">
+    <span>Nodeplotlib</span>
+  </div>
   <span class="spacer"></span>
-  <pages-dropdown></pages-dropdown>
-  <button class="help" mat-icon-button routerLink="docs"><mat-icon>layers</mat-icon></button>
-  <a href="https://twitter.com/nodeplotlib"><button mat-icon-button><img src="assets/social/twitter.png" width="22px"></button></a>
-  <a href="https://github.com/ngfelixl/nodeplotlib"><button mat-icon-button><img src="assets/social/github.png" width="22px"></button></a>
+  <app-connection-status [connected]="connected$ | async"></app-connection-status>
+  <button class="help" mat-icon-button routerLink="docs" matTooltip="Docs"><mat-icon>layers</mat-icon></button>
+  <a href="https://twitter.com/nodeplotlib"><button mat-icon-button matTooltip="Twitter"><img src="assets/social/twitter.png" width="22px"></button></a>
+  <a href="https://github.com/ngfelixl/nodeplotlib"><button mat-icon-button matTooltip="Github"><img src="assets/social/github.png" width="22px"></button></a>
 </mat-toolbar>

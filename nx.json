@@ -9,27 +9,21 @@
   },
   "projects": {
     "frontend": {
-      "tags": []
+      "tags": ["publish"]
     },
     "frontend-e2e": {
       "tags": []
     },
     "backend": {
-      "tags": ["backend"]
-    },
-    "interfaces": {
-      "tags": []
-    },
-    "pages": {
-      "tags": ["pages"]
+      "tags": ["server", "development"]
     },
     "nodeplotlib": {
-      "tags": []
+      "tags": ["server", "publish"]
     },
-    "shared-data": {
-      "tags": []
+    "server": {
+      "tags": ["server"]
     },
-    "reactive-entity-store": {
+    "interfaces": {
       "tags": []
     }
   }
